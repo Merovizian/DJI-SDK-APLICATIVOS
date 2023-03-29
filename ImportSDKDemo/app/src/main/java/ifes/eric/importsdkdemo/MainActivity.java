@@ -1,5 +1,6 @@
 package ifes.eric.importsdkdemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         versaoTexto = findViewById(R.id.TextoMain);
         versaoTexto.setText(String.valueOf(Build.VERSION.SDK_INT));
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
            checkAndRequestPermissions();
         }
 
-        setContentView(R.layout.activity_main);
 
         mHandler = new Handler(Looper.getMainLooper());
     }
@@ -78,11 +79,32 @@ public class MainActivity extends AppCompatActivity {
             // Se a versão do celular for maior do que a deste codigo.
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             Toast.makeText(this, "Dê as permissoes", Toast.LENGTH_SHORT).show();
-            // Faz o requerimento das permissões
+            // Faz o requerimento das permissões essa função sera puxada em onRequestPermissionsResult
             ActivityCompat.requestPermissions(this,
                     //
                     missingPermission.toArray(new String[missingPermission.size()]),
                     REQUEST_PERMISSION_CODE);
+        }
+    }
+    // Retorna o resultado das solicitações de permissçoes
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        // Check for granted permission and remove from missing list
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            for (int i = grantResults.length - 1; i >= 0; i--) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    missingPermission.remove(permissions[i]);
+                }
+            }
+        }
+        // If there is enough permission, we will start the registration
+        if (missingPermission.isEmpty()) {
+            startSDKRegistration();
+        } else {
+            showToast("Missing permissions!!!");
         }
     }
 
