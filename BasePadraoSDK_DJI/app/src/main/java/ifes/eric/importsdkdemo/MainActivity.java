@@ -34,6 +34,9 @@ import ifes.eric.importsdkdemo.SDKtestes.InformacoesDispositivo;
 public class MainActivity extends AppCompatActivity {
     // VERSAO ERIC
     public Button informacoesDispositivo;
+    public Boolean habilitarBotoes = false;
+
+
     private static final String TAG =  MainActivity.class.getName();
     public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static BaseProduct mProduct;
@@ -157,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onProductConnect(BaseProduct baseProduct) {
                             Log.d(TAG, String.format("onProductConnect newProduct:%s", baseProduct));
                             showToast("Product Connected");
+                            habilitarBotoes = true;
                             notifyStatusChange();
 
                         }
@@ -229,8 +233,12 @@ public class MainActivity extends AppCompatActivity {
 
     // VERSAO ERIC
     public void informacoesDispositivo(View view){
-        Intent intent = new Intent(getApplicationContext(), InformacoesDispositivo.class);
-        startActivity(intent);
+        if (habilitarBotoes) {
+            Intent intent = new Intent(getApplicationContext(), InformacoesDispositivo.class);
+            startActivity(intent);
+        } else{
+            Toast.makeText(this, "Espere carregar o drone", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
