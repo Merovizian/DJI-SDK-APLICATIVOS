@@ -1,4 +1,4 @@
-package ifes.eric.importsdkdemo;
+package ifes.eric.importSDKDemo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Build.VERSION.SDK_INT > é a versão do SDK que está rodando o aplicativo.
         if (Build.VERSION.SDK_INT >= 23){
-           checkAndRequestPermissions();
+            checkAndRequestPermissions();
         }
         setContentView(R.layout.activity_main);
 
