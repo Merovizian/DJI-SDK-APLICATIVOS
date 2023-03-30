@@ -1,4 +1,4 @@
-package ifes.eric.importSDKDemo;
+package ifes.eric.importsdkdemo;
 
 import android.content.Context;
 

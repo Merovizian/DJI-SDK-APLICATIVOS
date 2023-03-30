@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,8 +29,11 @@ import dji.sdk.base.BaseProduct;
 import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
 import dji.thirdparty.afinal.core.AsyncTask;
+import ifes.eric.importsdkdemo.SDKTESTES.InformacoesDispositivo;
 
 public class MainActivity extends AppCompatActivity {
+    // VERSAO ERIC
+    public Button informacoesDispositivo;
     private static final String TAG =  MainActivity.class.getName();
     public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static BaseProduct mProduct;
@@ -64,6 +69,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHandler = new Handler(Looper.getMainLooper());
+
+
+        // VERSAO ERIC
+        informacoesDispositivo = findViewById(R.id.button_Main_InfDisp); // Sera iniciado por função
+
     }
 
     // Verifica o estado das permissoes.
@@ -215,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // VERSAO ERIC
+    public void informacoesDispositivo(){
+        Intent intent = new Intent(this, InformacoesDispositivo.class);
+        startActivity(intent);
     }
 
 
